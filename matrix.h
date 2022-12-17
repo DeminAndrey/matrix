@@ -36,10 +36,10 @@ auto& Matrix<T, value>::operator[](size_t row) {
 
 template<typename T, T value>
 auto Matrix<T, value>::begin()  {
-  return matrix_iterator<T>(m_data.begin());
+  return MatrixIterator<T>(m_data.begin());
 }
 
 template<typename T, T value>
 auto Matrix<T, value>::end() {
-  return matrix_iterator<T>(m_data.end());
+  return MatrixIterator<T>(m_data.end());
 }

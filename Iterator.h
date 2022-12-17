@@ -1,50 +1,52 @@
 #pragma once 
 
-#include <tuple>
 #include <map>
+#include <tuple>
+
 
 template <typename T>
-class matrix_iterator {
-	using  output_matrix_iterator = typename std::map<std::pair<std::size_t,std::size_t>,T>::iterator;
+class MatrixIterator {
+  using output_matrix_iterator =
+  typename std::map<std::pair<size_t, size_t>, T>::iterator;
+
 public:
-	 matrix_iterator(output_matrix_iterator iteratr);
-	~matrix_iterator();
-	 bool operator!=(matrix_iterator<T> const& other) const;
-     bool operator==(matrix_iterator<T> const& other) const;
-	 auto operator*() const;
-	 auto operator++();
+  MatrixIterator(output_matrix_iterator iteratr);
+  ~MatrixIterator() = default;
+
+  bool operator!=(MatrixIterator<T> const& other) const;
+  bool operator==(MatrixIterator<T> const& other) const;
+
+  auto operator*() const;
+  auto operator++();
+
 private:
-	output_matrix_iterator iterator;
+  output_matrix_iterator iterator;
 };
 
 
 template<typename T>
-matrix_iterator<T>::matrix_iterator(output_matrix_iterator iteratr) : iterator(iteratr) {}
+MatrixIterator<T>::MatrixIterator(output_matrix_iterator iterator)
+  : iterator(iterator) {}
 
 template<typename T>
-matrix_iterator<T>::~matrix_iterator(){}
-
-template<typename T>
-bool matrix_iterator<T>::operator != (matrix_iterator<T> const& other) const {
-    return iterator != other.iterator;
+bool MatrixIterator<T>::operator!= (MatrixIterator<T> const& other) const {
+  return iterator != other.iterator;
 }
 
 template<typename T>
-bool matrix_iterator<T>::operator==(matrix_iterator<T> const& other) const {
-	return iterator == other.iterator;
+bool MatrixIterator<T>::operator==(MatrixIterator<T> const& other) const {
+  return iterator == other.iterator;
 }
 
 template<typename T>
-auto matrix_iterator<T>::operator*() const {
-    return std::make_tuple( iterator->first.first,
-                            iterator->first.second,
-                            iterator->second
-                        );
+auto MatrixIterator<T>::operator*() const {
+  return std::make_tuple(iterator->first.first,
+                         iterator->first.second,
+                         iterator->second);
 }
 
 template<typename T>
-auto matrix_iterator<T>::operator++()
-{
-    iterator++;
-    return *this;
+auto MatrixIterator<T>::operator++() {
+  iterator++;
+  return *this;
 }
