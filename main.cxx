@@ -33,11 +33,11 @@ void print_occupied(Matrix<T, value>& matrix) {
   for (auto c : matrix) {
     int i;
     int j;
-    int value;
-    std::tie(i, j, value) = c;
+    T val;
+    std::tie(i, j, val) = c;
     std::cout << "i = " <<  i <<
                  " j = "<<  j <<
-                 " value = " << value << std::endl;
+                 " value = " << val << std::endl;
   }
 }
 
