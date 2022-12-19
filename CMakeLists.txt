@@ -21,13 +21,26 @@ target_link_libraries(tests
   ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
 )
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0 -Wall -pedantic")
 set_target_properties(${PROJECT_NAME} PROPERTIES
-                CXX_STANDARD 17
-                CXX_STANDARD_REQUIRED ON
-                COMPILE_OPTIONS "-O0;-Wall;"
-                )
+  CXX_STANDARD 17
+  CXX_STANDARD_REQUIRED ON
+)
 
+if(MSVC)
+    target_compile_options(matrix PRIVATE
+        /W4
+    )
+    target_compile_options(tests PRIVATE
+        /W4
+    )
+else()
+    target_compile_options(matrix PRIVATE
+        -Werror -Wall -Wimplicit-fallthrough -pedantic-errors
+    )
+    target_compile_options(tests PRIVATE
+        -Werror -Wall -Wimplicit-fallthrough -pedantic-errors
+    )
+endif()
 
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
 
