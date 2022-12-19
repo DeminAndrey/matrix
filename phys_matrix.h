@@ -4,6 +4,9 @@
 #include <map>
 #include <utility>
 
+/**
+ * класс 2-мерной разреженной бесконечной матрицы
+ */
 template<typename T, T value>
 class PhysicaMatrix {
   using matrix_position = std::pair<size_t, size_t>;
@@ -14,19 +17,52 @@ class PhysicaMatrix {
 
 public:
   PhysicaMatrix() = default;
+  ~PhysicaMatrix() = default;
 
+  /**
+   * @brief size возращает количество занятых ячеек
+   */
   size_t size() const;
+
+  /**
+   * @brief setRow устанавливает как текущий ряд матрицы
+   *  по которому идет обращение к матрице
+   * @param row значение ряда (первый индекс)
+   */
   void setRow(size_t row);
 
   PhysicaMatrix& operator[](size_t pos);
   PhysicaMatrix& operator=(const T& other);
-
   bool operator==(T val) const;
-  operator auto();
 
+  /**
+   * @brief begin возвращает указатель на первую занятую ячейку
+   */
   auto begin();
+
+  /**
+   * @brief end возвращает указатель конца занятых ячеек
+   */
   auto end();
+
+  template<typename Type, Type val>
+  friend std::ostream& operator<<(
+      std::ostream& out, const PhysicaMatrix<Type, val>& m);
 };
+
+/**
+ * перегруженный оператор вывода в поток матрицы
+ */
+template<typename Type, Type val>
+std::ostream& operator<<(std::ostream& out,
+                         const PhysicaMatrix<Type, val>& m) {
+  auto it = m.m_matrix.find(m.m_current);
+  auto output = (it != m.m_matrix.end())
+      ? it->second : val;
+  out << output;
+
+  return out;
+}
 
 template<typename T, T value>
 size_t PhysicaMatrix<T, value>::size() const {
@@ -66,12 +102,6 @@ bool PhysicaMatrix<T, value>::operator==(T val) const {
   else {
     return (val == defaultValue) ? true : false;
   }
-}
-
-template<typename T, T value>
-PhysicaMatrix<T, value>::operator auto() {
-  auto it = m_matrix.find(m_current);
-  return (it != m_matrix.end()) ? it->second : value;
 }
 
 template<typename T, T value>

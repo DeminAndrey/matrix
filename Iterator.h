@@ -3,14 +3,16 @@
 #include <map>
 #include <tuple>
 
-
+/**
+ * класс итератора над данными для бесконечной матрицы
+ */
 template <typename T>
 class MatrixIterator {
   using output_matrix_iterator =
   typename std::map<std::pair<size_t, size_t>, T>::iterator;
 
 public:
-  MatrixIterator(output_matrix_iterator iteratr);
+  MatrixIterator(output_matrix_iterator iterator);
   ~MatrixIterator() = default;
 
   bool operator!=(MatrixIterator<T> const& other) const;

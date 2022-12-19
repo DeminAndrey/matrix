@@ -6,16 +6,31 @@
 #include <map>
 #include <utility>
 
+/**
+ * класс-обертка над 2-мерной разреженной бесконечной матрицы
+ */
 template<typename T, T value>
 class Matrix {
   PhysicaMatrix<T, value> m_data;
 
 public: 
   Matrix() = default;
+  ~Matrix() = default;
 
-  auto size() const;
+  /**
+   * @brief size возращает количество занятых ячеек
+   */
+  size_t size() const;
   auto& operator[](size_t row);
+
+  /**
+   * @brief begin возвращает указатель на первую занятую ячейку
+   */
   auto begin();
+
+  /**
+   * @brief end возвращает указатель конца занятых ячеек
+   */
   auto end();
 
 private:
@@ -24,7 +39,7 @@ private:
 };
 
 template<typename T, T value>
-auto Matrix<T, value>::size() const {
+size_t Matrix<T, value>::size() const {
   return m_data.size();
 }
 
