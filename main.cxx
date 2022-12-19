@@ -44,7 +44,7 @@ void print_occupied(Matrix<T, value>& matrix) {
 
 int main() {
   Matrix <int, 0> m;
-  for (size_t i = 0; i < 10; i++) {
+  for (std::size_t i = 0; i < 10; i++) {
     m[i][i] = i;
     m[i][9 - i] = 9 - i;
   }

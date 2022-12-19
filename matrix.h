@@ -20,8 +20,8 @@ public:
   /**
    * @brief size возращает количество занятых ячеек
    */
-  size_t size() const;
-  auto& operator[](size_t row);
+  std::size_t size() const;
+  auto& operator[](std::size_t row);
 
   /**
    * @brief begin возвращает указатель на первую занятую ячейку
@@ -39,12 +39,12 @@ private:
 };
 
 template<typename T, T value>
-size_t Matrix<T, value>::size() const {
+std::size_t Matrix<T, value>::size() const {
   return m_data.size();
 }
 
 template<typename T, T value>
-auto& Matrix<T, value>::operator[](size_t row) {
+auto& Matrix<T, value>::operator[](std::size_t row) {
   m_data.setRow(row);
   return m_data;
 }

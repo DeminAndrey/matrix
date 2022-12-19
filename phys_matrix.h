@@ -9,7 +9,7 @@
  */
 template<typename T, T value>
 class PhysicaMatrix {
-  using matrix_position = std::pair<size_t, size_t>;
+  using matrix_position = std::pair<std::size_t, std::size_t>;
 
   static const T defaultValue = value;
   std::map<matrix_position, T> m_matrix;
@@ -22,16 +22,16 @@ public:
   /**
    * @brief size возращает количество занятых ячеек
    */
-  size_t size() const;
+  std::size_t size() const;
 
   /**
    * @brief setRow устанавливает как текущий ряд матрицы
    *  по которому идет обращение к матрице
    * @param row значение ряда (первый индекс)
    */
-  void setRow(size_t row);
+  void setRow(std::size_t row);
 
-  PhysicaMatrix& operator[](size_t pos);
+  PhysicaMatrix& operator[](std::size_t pos);
   PhysicaMatrix& operator=(const T& other);
   bool operator==(T val) const;
 
@@ -65,17 +65,17 @@ std::ostream& operator<<(std::ostream& out,
 }
 
 template<typename T, T value>
-size_t PhysicaMatrix<T, value>::size() const {
+std::size_t PhysicaMatrix<T, value>::size() const {
   return m_matrix.size();
 }
 
 template<typename T, T value>
-void PhysicaMatrix<T, value>::setRow(size_t row) {
+void PhysicaMatrix<T, value>::setRow(std::size_t row) {
   m_current.first = row;
 }
 
 template<typename T, T value>
-PhysicaMatrix<T, value>& PhysicaMatrix<T, value>::operator[](size_t pos) {
+PhysicaMatrix<T, value>& PhysicaMatrix<T, value>::operator[](std::size_t pos) {
   m_current.second = pos;
   return *this;
 }
