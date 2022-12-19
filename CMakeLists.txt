@@ -21,7 +21,7 @@ target_link_libraries(tests
   ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
 )
 
-set_target_properties(${PROJECT_NAME} PROPERTIES
+set_target_properties(${PROJECT_NAME} tests PROPERTIES
   CXX_STANDARD 17
   CXX_STANDARD_REQUIRED ON
 )
