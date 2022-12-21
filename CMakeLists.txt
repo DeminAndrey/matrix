@@ -5,26 +5,25 @@ set(PROJECT_VESRION 0.0.${PATCH_VERSION})
 
 project(matrix VERSION ${PROJECT_VESRION})
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../bin)
-
-find_package(Threads)
+configure_file(version.h.in version.h)
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 
-add_executable(${PROJECT_NAME} main.cxx)
+add_executable(matrix main.cxx)
 add_executable(tests tests.cxx)
 
-target_include_directories(tests
-  PRIVATE ${Boost_INCLUDE_DIR}
+set_target_properties(matrix tests PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED ON
 )
 
-target_link_libraries(tests
-  ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
+target_include_directories(matrix PRIVATE "${CMAKE_BINARY_DIR}")
+
+set_target_properties(tests PROPERTIES
+    COMPILE_DEFINITIONS BOOST_TEST_DYN_LINK
+    INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIR}
 )
 
-set_target_properties(${PROJECT_NAME} tests PROPERTIES
-  CXX_STANDARD 17
-  CXX_STANDARD_REQUIRED ON
-)
+target_link_libraries(tests ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
 if(MSVC)
     target_compile_options(matrix PRIVATE
@@ -42,16 +41,13 @@ else()
     )
 endif()
 
-install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
-
 set(CPACK_GENERATOR DEB)
 
 set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
 set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
 set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
 
-set(CPACK_PACKAGE_CONTACT example@example.ru)
-set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+set(CPACK_PACKAGE_CONTACT example@example.com)
 
 include(CPack)
 
