@@ -11,7 +11,7 @@ find_package(Threads)
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 
 add_executable(${PROJECT_NAME} main.cxx)
-add_executable(tests matrixTest.cxx)
+add_executable(tests tests.cxx)
 
 target_include_directories(tests
   PRIVATE ${Boost_INCLUDE_DIR}
